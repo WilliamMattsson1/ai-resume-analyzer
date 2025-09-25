@@ -1,24 +1,18 @@
-import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
+import { useEffect, useState } from 'react'
+import { usePuterStore } from '~/lib/puter'
+import Summary from '~/components/Summary'
 import ATS from '~/components/ATS'
 import Details from '~/components/Details'
-import Summary from '~/components/Summary'
-import { usePuterStore } from '~/lib/puter'
 
-export const meta = () => {
-    return [
-        { title: 'Resumind - Review' },
-        {
-            name: 'description',
-            content: 'Detailed overview of your resume'
-        }
-    ]
-}
+export const meta = () => [
+    { title: 'Resumind | Review ' },
+    { name: 'description', content: 'Detailed overview of your resume' }
+]
 
-const resume = () => {
+const Resume = () => {
     const { auth, isLoading, fs, kv } = usePuterStore()
     const { id } = useParams()
-
     const [imageUrl, setImageUrl] = useState('')
     const [resumeUrl, setResumeUrl] = useState('')
     const [feedback, setFeedback] = useState<Feedback | null>(null)
@@ -46,12 +40,11 @@ const resume = () => {
 
             const imageBlob = await fs.read(data.imagePath)
             if (!imageBlob) return
-
-            const imageURL = URL.createObjectURL(imageBlob)
-            setImageUrl(imageURL)
+            const imageUrl = URL.createObjectURL(imageBlob)
+            setImageUrl(imageUrl)
 
             setFeedback(data.feedback)
-            console.log({ resumeUrl, imageURL, feedback: data.feedback })
+            console.log({ resumeUrl, imageUrl, feedback: data.feedback })
         }
 
         loadResume()
@@ -72,19 +65,18 @@ const resume = () => {
                 </Link>
             </nav>
             <div className="flex flex-row w-full max-lg:flex-col-reverse">
-                <section className="feedback-section bg-[url('/images/bg-small.svg') bg-cover h-[100vh] sticky top-0 items-center justify-around]">
+                <section className="feedback-section bg-[url('/images/bg-small.svg') bg-cover h-[100vh] sticky top-0 items-center justify-center">
                     {imageUrl && resumeUrl && (
                         <div className="animate-in fade-in duration-1000 gradient-border max-sm:m-0 h-[90%] max-wxl:h-fit w-fit">
                             <a
                                 href={resumeUrl}
                                 target="_blank"
-                                rel="noreferrer"
+                                rel="noopener noreferrer"
                             >
                                 <img
                                     src={imageUrl}
-                                    alt="resume-image"
-                                    className="w-full h-full object-contain rounded-2xl "
-                                    title="Resume"
+                                    className="w-full h-full object-contain rounded-2xl"
+                                    title="resume"
                                 />
                             </a>
                         </div>
@@ -106,7 +98,6 @@ const resume = () => {
                     ) : (
                         <img
                             src="/images/resume-scan-2.gif"
-                            alt="scanning gif"
                             className="w-full"
                         />
                     )}
@@ -115,5 +106,4 @@ const resume = () => {
         </main>
     )
 }
-
-export default resume
+export default Resume
