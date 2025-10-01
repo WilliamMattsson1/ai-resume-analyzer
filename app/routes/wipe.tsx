@@ -41,22 +41,33 @@ const WipeApp = () => {
     return (
         <div>
             Authenticated as: {auth.user?.username}
-            <div>Existing files:</div>
-            <div className="flex flex-col gap-4">
-                {files.map((file) => (
-                    <div key={file.id} className="flex flex-row gap-4">
-                        <p>{file.name}</p>
+            {files.length > 0 && (
+                <>
+                    <div>Existing files:</div>
+                    <div className="flex flex-col gap-4">
+                        {files.map((file) => (
+                            <div key={file.id} className="flex flex-row gap-4">
+                                <p>{file.name}</p>
+                            </div>
+                        ))}
                     </div>
-                ))}
-            </div>
-            <div>
-                <button
-                    className="bg-blue-500 text-white px-4 py-2 rounded-md cursor-pointer"
-                    onClick={() => handleDelete()}
-                >
-                    Wipe App Data
-                </button>
-            </div>
+                    <div>
+                        <button
+                            className="bg-blue-500 text-white px-4 py-2 rounded-md cursor-pointer"
+                            onClick={() => handleDelete()}
+                        >
+                            Wipe App Data
+                        </button>
+                    </div>
+                </>
+            )}
+            {files.length === 0 && <p>All files deleted!</p>}
+            <a
+                className="bg-blue-500 text-white px-4 py-2 rounded-md cursor-pointer inline-block"
+                href="/"
+            >
+                Go to Homepage
+            </a>
         </div>
     )
 }
