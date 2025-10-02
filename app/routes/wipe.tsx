@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { usePuterStore } from '~/lib/puter'
 
 const WipeApp = () => {
@@ -62,12 +62,12 @@ const WipeApp = () => {
                 </>
             )}
             {files.length === 0 && <p>All files deleted!</p>}
-            <a
-                className="bg-blue-500 text-white px-4 py-2 rounded-md cursor-pointer inline-block"
-                href="/"
-            >
-                Go to Homepage
-            </a>
+            <Link to="/" className="back-button w-fit mt-2">
+                <img src="/icons/back.svg" alt="logo" className="w-2.5 h-2.5" />
+                <span className="text-gray-800 text-sm font-semibold">
+                    Back to Homepage
+                </span>
+            </Link>
         </div>
     )
 }
